@@ -1,0 +1,160 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+body {
+
+    background-color: #f5f6fa;
+
+    color: #333;
+
+}
+
+
+h1 {
+
+    margin-bottom: 25px;
+
+    color: #222;
+
+}
+
+
+h2 {
+
+    margin-top: 20px;
+    margin-bottom: 15px;
+
+}
+
+
+button {
+
+    border: none;
+
+    padding: 8px 14px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    background-color: #2563eb;
+
+    color: white;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+
+}
+
+
+button:hover {
+
+    opacity: 0.85;
+
+}
+
+
+input,
+select {
+
+    padding: 10px;
+
+    border-radius: 6px;
+
+    border: 1px solid #ccc;
+
+    margin-right: 10px;
+
+}
+table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    background-color: white;
+
+    margin-top: 20px;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+}
+
+
+thead {
+
+    background-color: #2563eb;
+
+    color: white;
+
+}
+
+
+th {
+
+    padding: 14px;
+
+    text-align: left;
+
+}
+
+
+td {
+
+    padding: 12px;
+
+    border-bottom: 1px solid #ddd;
+
+}
+
+
+tbody tr:hover {
+
+    background-color: #f1f5f9;
+
+}
+
+.container {
+
+    max-width: 1200px;
+
+    margin: 30px auto;
+
+    padding: 20px;
+
+}
+
+.btn-editar {
+
+    background-color: #2563eb;
+
+}
+
+
+.btn-remover {
+
+    background-color: #dc2626;
+
+}
+
+
+.btn-confirmar {
+
+    background-color: #16a34a;
+
+}
+
+
+.btn-alerta {
+
+    background-color: #f59e0b;
+
+}
