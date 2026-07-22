@@ -16,17 +16,18 @@ function Navbar(){
                 Dashboard
             </Link>
 
-            <Link to="/produtos">
-                Produtos
-            </Link>
-
             <Link to="/vendas">
-                Nova Venda
+                Venda
             </Link>
 
             <Link to="/comandas">
-                Comandas
+                Comandas abertas
             </Link>
+
+            <Link to="/produtos">
+                Produtos
+            </Link>
+            
             <Link to="/cadastro-produto">
             Novo Produto
             </Link>

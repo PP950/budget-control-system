@@ -142,38 +142,75 @@ public class VendaService {
         }
 
 
-        BigDecimal subtotal =
-                produto.getPreco()
-                        .multiply(
-                                BigDecimal.valueOf(dto.quantidade())
-                        );
+        ItemVenda itemExistente = venda.getItens()
+                .stream()
+                .filter(item ->
+                        item.getProduto()
+                                .getId()
+                                .equals(produto.getId())
+                )
+                .findFirst()
+                .orElse(null);
 
 
-        ItemVenda item = new ItemVenda();
+        if(itemExistente != null){
 
-        item.setProduto(produto);
-        item.setVenda(venda);
-        item.setQuantidade(dto.quantidade());
-        item.setPrecoUnitario(produto.getPreco());
-        item.setSubtotal(subtotal);
+            int novaQuantidade =
+                    itemExistente.getQuantidade()
+                            + dto.quantidade();
 
 
-        venda.getItens().add(item);
+            itemExistente.setQuantidade(novaQuantidade);
+
+            itemExistente.setSubtotal(
+                    itemExistente.getPrecoUnitario()
+                            .multiply(
+                                    BigDecimal.valueOf(novaQuantidade)
+                            )
+            );
 
 
-        venda.setValorTotal(
-                venda.getValorTotal().add(subtotal)
-        );
+        } else {
+
+
+            ItemVenda item = new ItemVenda();
+
+            item.setProduto(produto);
+            item.setVenda(venda);
+            item.setQuantidade(dto.quantidade());
+            item.setPrecoUnitario(produto.getPreco());
+            item.setSubtotal(
+                    produto.getPreco()
+                            .multiply(
+                                    BigDecimal.valueOf(dto.quantidade())
+                            )
+            );
+
+
+            venda.getItens().add(item);
+
+        }
 
 
         produto.setQuantidadeEstoque(
                 produto.getQuantidadeEstoque()
-                        -
-                        dto.quantidade()
+                        - dto.quantidade()
         );
 
 
         produtoRepository.save(produto);
+
+
+        BigDecimal total = venda.getItens()
+                .stream()
+                .map(ItemVenda::getSubtotal)
+                .reduce(
+                        BigDecimal.ZERO,
+                        BigDecimal::add
+                );
+
+
+        venda.setValorTotal(total);
 
 
         Venda salva = vendaRepository.save(venda);
@@ -182,6 +219,7 @@ public class VendaService {
         return vendaMapper.toResponseDTO(salva);
 
     }
+
 
     @Transactional
     public void removerItemComanda(Long vendaId, Long itemId){
@@ -211,20 +249,37 @@ public class VendaService {
         Produto produto = item.getProduto();
 
 
-        // devolve para estoque
         produto.setQuantidadeEstoque(
-                produto.getQuantidadeEstoque() + item.getQuantidade()
+                produto.getQuantidadeEstoque() + 1
         );
 
 
         produtoRepository.save(produto);
 
 
-        // remove item
-        venda.getItens().remove(item);
+        if(item.getQuantidade() > 1){
+
+            int novaQuantidade =
+                    item.getQuantidade() - 1;
 
 
-        // recalcula total
+            item.setQuantidade(novaQuantidade);
+
+
+            item.setSubtotal(
+                    item.getPrecoUnitario()
+                            .multiply(
+                                    BigDecimal.valueOf(novaQuantidade)
+                            )
+            );
+
+
+        } else {
+
+            venda.getItens().remove(item);
+
+        }
+
 
         BigDecimal novoTotal = venda.getItens()
                 .stream()
