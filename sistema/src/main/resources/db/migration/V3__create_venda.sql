@@ -21,5 +21,5 @@ CREATE TABLE itens_venda (
 
                              CONSTRAINT fk_item_produto
                                  FOREIGN KEY (produto_id)
-                                     REFERENCES produtos(id)
+                                     REFERENCES produto(id)
 );
