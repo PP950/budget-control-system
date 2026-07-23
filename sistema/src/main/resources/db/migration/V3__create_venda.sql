@@ -1,4 +1,4 @@
-CREATE TABLE vendas (
+CREATE TABLE venda (
                         id BIGINT AUTO_INCREMENT PRIMARY KEY,
                         nome_cliente VARCHAR(100),
                         data_venda DATETIME NOT NULL,
