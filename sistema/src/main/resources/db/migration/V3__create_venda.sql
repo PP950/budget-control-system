@@ -17,7 +17,7 @@ CREATE TABLE itens_venda (
 
                              CONSTRAINT fk_item_venda
                                  FOREIGN KEY (venda_id)
-                                     REFERENCES vendas(id),
+                                     REFERENCES venda(id),
 
                              CONSTRAINT fk_item_produto
                                  FOREIGN KEY (produto_id)
